@@ -1,26 +1,23 @@
-import { useState, useCallback } from 'react';
-import Background from './components/Background';
-import Header from './components/Header';
-import TeamGrid from './components/TeamGrid';
-import Spotlight from './components/Spotlight';
+import { Suspense } from 'react';
+import HeroSection from './components/HeroSection';
+import TeamSection from './components/TeamSection';
 
 export default function App() {
-  const [memberPositions, setMemberPositions] = useState<{ x: number; y: number }[]>([]);
-
-  const handlePositionsUpdate = useCallback((positions: { x: number; y: number }[]) => {
-    setMemberPositions(positions);
-  }, []);
-
   return (
-    <div className="relative min-h-screen overflow-hidden">
-      <Background />
-      <div className="relative z-10">
-        <Header />
-        <main>
-          <TeamGrid onPositionsUpdate={handlePositionsUpdate} />
-        </main>
-      </div>
-      <Spotlight memberPositions={memberPositions} />
+    <div className="relative bg-black min-h-screen">
+      <Suspense fallback={null}>
+        <HeroSection />
+        <TeamSection />
+
+        {/* Footer */}
+        <footer className="bg-black py-16 border-t border-white/10">
+          <div className="max-w-7xl mx-auto px-6 text-center">
+            <p className="text-white/40 text-sm">
+              Team Grey &middot; UBC BizTech &middot; Vibe coded by DTong
+            </p>
+          </div>
+        </footer>
+      </Suspense>
     </div>
   );
 }
