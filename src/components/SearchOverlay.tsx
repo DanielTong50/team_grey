@@ -68,7 +68,7 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                   className="hidden md:flex items-center px-6 py-2.5 border border-white text-white text-sm
                            hover:bg-white hover:text-black transition-all duration-300"
                 >
-                  Get Started
+                  UBC BIZTECH
                 </a>
 
                 <button

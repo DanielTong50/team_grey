@@ -3,8 +3,8 @@ import { useState } from 'react';
 import SearchOverlay from './SearchOverlay';
 
 export default function HeroSection() {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [bannerOpen, setBannerOpen] = useState(true);
 
   return (
     <section className="relative h-screen w-full overflow-hidden">
@@ -34,29 +34,35 @@ export default function HeroSection() {
       </div>
 
       {/* Top Banner */}
-      <motion.div
-        className="absolute top-0 left-0 right-0 z-30 bg-white text-black py-3 px-6"
-        initial={{ y: -50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <p className="text-sm">
-            Check out our{' '}
-            <a href="https://www.ubcbiztech.com/" target="_blank" rel="noopener noreferrer" className="underline hover:no-underline font-medium">
-              club's website
-            </a>
-          </p>
-          <button className="text-black hover:opacity-70 transition-opacity">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-      </motion.div>
+      {bannerOpen && (
+        <motion.div
+          className="absolute top-0 left-0 right-0 z-30 bg-white text-black py-3 px-6"
+          initial={{ y: -50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: -50, opacity: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <p className="text-sm">
+              Check out our{' '}
+              <a href="https://github.com/DanielTong50/team_grey" target="_blank" rel="noopener noreferrer" className="underline hover:no-underline font-medium">
+                repo
+              </a>
+            </p>
+            <button
+              onClick={() => setBannerOpen(false)}
+              className="text-black hover:opacity-70 transition-opacity"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </motion.div>
+      )}
 
       {/* Navigation */}
-      <nav className="absolute top-14 left-0 right-0 z-20 px-6 py-4">
+      <nav className={`absolute left-0 right-0 z-20 px-6 py-4 transition-all duration-300 ${bannerOpen ? 'top-14' : 'top-4'}`}>
         <div className="max-w-7xl mx-auto flex items-center justify-between relative">
           {/* Frosted glass background */}
           <div className="absolute -inset-x-6 -inset-y-4 bg-white/10 backdrop-blur-md -z-10" />
@@ -89,7 +95,7 @@ export default function HeroSection() {
               className="hidden md:flex items-center px-6 py-2.5 border border-white text-white text-sm
                        hover:bg-white hover:text-black transition-all duration-300"
             >
-              Get Started
+              UBC BIZTECH
             </a>
 
             <button
