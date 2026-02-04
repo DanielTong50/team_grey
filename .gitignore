@@ -42,10 +42,9 @@ coverage/
 
 # Video files (too large for git)
 *.mov
-*.mp4
 *.avi
 *.mkv
 *.webm
 
-# Optional: uncomment if you want to track the video
-# !public/hero-video.mp4
+# Allow the hero video for deployment
+!public/hero-video.mp4

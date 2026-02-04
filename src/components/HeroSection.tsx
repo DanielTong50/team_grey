@@ -1,8 +1,10 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import SearchOverlay from './SearchOverlay';
 
 export default function HeroSection() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   return (
     <section className="relative h-screen w-full overflow-hidden">
@@ -11,10 +13,19 @@ export default function HeroSection() {
         <video
           autoPlay
           muted
-          loop
           playsInline
           className="w-full h-full object-cover"
           poster="/video-poster.jpg"
+          onLoadedMetadata={(e) => {
+            const video = e.currentTarget;
+            video.currentTime = 4;
+          }}
+          onTimeUpdate={(e) => {
+            const video = e.currentTarget;
+            if (video.duration - video.currentTime <= 5) {
+              video.currentTime = 4;
+            }
+          }}
         >
           <source src="/hero-video.mp4" type="video/mp4" />
         </video>
@@ -49,6 +60,7 @@ export default function HeroSection() {
         <div className="max-w-7xl mx-auto flex items-center justify-between relative">
           {/* Frosted glass background */}
           <div className="absolute -inset-x-6 -inset-y-4 bg-white/10 backdrop-blur-md -z-10" />
+
           {/* Logo */}
           <motion.div
             className="flex items-center gap-2"
@@ -80,14 +92,17 @@ export default function HeroSection() {
               Get Started
             </a>
 
-            <button className="p-2 text-white hover:opacity-70 transition-opacity">
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="p-2 text-white hover:opacity-70 transition-opacity"
+            >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             </button>
 
             <button
-              onClick={() => setMenuOpen(!menuOpen)}
+              onClick={() => setSearchOpen(true)}
               className="p-2 text-white hover:opacity-70 transition-opacity"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -119,6 +134,9 @@ export default function HeroSection() {
 
       {/* Bottom gradient */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/50 to-transparent z-10" />
+
+      {/* Search Overlay */}
+      <SearchOverlay isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
     </section>
   );
 }
